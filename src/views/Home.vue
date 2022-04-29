@@ -1,18 +1,71 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="bgImage">
+      <video autoplay="autoplay" loop="loop" muted="muted">
+        <source src="https://assets.codepen.io/3364143/7btrrd.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="mainContent">
+      <HomeHeader></HomeHeader>
+      <div class="bottom">
+        <HomeAside></HomeAside>
+        <router-view style="height: 742px"></router-view>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import HomeHeader from "@/components/Home/HomeHeader";
+import HomeAside from "@/components/Home/HomeAside";
+import HeaderMusicPage from "@/views/HeaderMusicPage";
+import HeaderMvPage from "@/views/HeaderMvPage";
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    HomeAside,
+    HomeHeader
   }
 }
 </script>
+
+<style scoped lang="less">
+.home {
+  width: 100vw;
+  height: 100vh;
+}
+.bgImage {
+  width: 100%;
+  height: 100%;
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit:fill;
+    position: fixed;
+    left: 0;
+    top: 0;
+  }
+}
+.mainContent {
+  width: 1600px;
+  height: 800px;
+  background-color: rgba(82,18,34,0.5);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin: -400px 0 0 -800px;
+  border-radius: 20px;
+}
+.nav {
+  width: 228.5px;
+  height: 742px;
+}
+.bottom {
+  display: flex;
+}
+.content {
+  flex: 1;
+  height: 742px;
+  background-color: orange;
+}
+</style>
