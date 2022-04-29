@@ -43,6 +43,7 @@ export default {
         let moveObj = new Map();
         moveObj.set('HeaderMusicPage',0);
         moveObj.set('HeaderMVPage',1);
+        moveObj.set('HeaderRadioPage',2);
         this.move = moveObj.get(newVal.name)*114.2;
         this.active = moveObj.get(newVal.name);
       },
@@ -57,11 +58,10 @@ export default {
         this.$router.push({name:"HeaderMusicPage"});
       }
       else if(index===1) {
-        console.log('kskskksk')
         this.$router.push({name:"HeaderMVPage"})
       }
       else if(index===2) {
-
+        this.$router.push({name:"HeaderRadioPage"})
       }
       else if(index===3) {
 

@@ -1,19 +1,30 @@
 <template>
-  <div class="main">
-    <h3>我是首页</h3>
+  <div class="HeaderMusicmain">
+    <Banner style="height: 240px"></Banner>
+    <div class="newSong">
+
+    </div>
   </div>
 </template>
 
 <script>
+import Banner from "@/components/HeaderMusicPage/Banner";
 export default {
-  name: "HeaderMusicPage"
+  name: "HeaderMusicPage",
+  components:{
+    Banner,
+  },
 }
 </script>
 
 <style scoped lang="less">
- .main {
+ .HeaderMusicmain {
    width: 1334px;
    height: 100%;
-   background-color: pink;
+   background-color: rgba(36, 39, 59, 0.3);
+   border-radius: 20px;
+   display: flex;
+   justify-content: center;
+   align-items: flex-start;
  }
 </style>
