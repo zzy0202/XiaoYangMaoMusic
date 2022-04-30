@@ -32,7 +32,6 @@ export default {
     this.$eventBus.$on('login',(show)=>{
       this.showLogin = show;
     })
-    console.log(this.$store.state.user);
   },
   components: {
     Login,

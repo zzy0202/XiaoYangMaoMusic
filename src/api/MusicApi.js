@@ -21,10 +21,12 @@ const getNewSongRecommend = (params) => {
 //获取推荐歌单
 const getRecommendSongList = (params) => {
 	return request({
-		
+		url: '/top/playlist',
+		method: "GET",
+		params,
 	})
 }
 
 export {
-	getBanner, getNewSongRecommend,
+	getBanner, getNewSongRecommend, getRecommendSongList
 }
