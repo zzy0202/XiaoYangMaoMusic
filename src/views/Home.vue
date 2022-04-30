@@ -12,7 +12,11 @@
       <HomeHeader></HomeHeader>
       <div class="bottom">
         <HomeAside></HomeAside>
-        <router-view style="height: 742px"></router-view>
+        <transition name="fade" mode="out-in">
+          <keep-alive>
+            <router-view style="height: 742px"></router-view>
+          </keep-alive>
+        </transition>
       </div>
     </div>
   </div>
@@ -81,5 +85,11 @@ export default {
   flex: 1;
   height: 742px;
   background-color: orange;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
