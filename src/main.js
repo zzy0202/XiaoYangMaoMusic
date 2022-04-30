@@ -5,6 +5,12 @@ import store from './store'
 import './assets/iconfont.css'
 import {Pagination} from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import APlayer from '@moefe/vue-aplayer';
+
+Vue.use(APlayer, {
+  defaultCover: 'https://github.com/u3u.png',
+  productionTip: true,
+});
 
 const eventBus = new Vue();
 Vue.prototype.$eventBus = eventBus;

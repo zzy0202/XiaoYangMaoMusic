@@ -225,7 +225,9 @@ export default {
       transition: all 0.5s;
       font-size: 15px;
     }
-    span:hover {
+    span:hover,
+    .avatar:hover,
+    svg:hover{
       color: ghostwhite;
       cursor: pointer;
     }

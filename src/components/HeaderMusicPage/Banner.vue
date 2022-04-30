@@ -72,6 +72,7 @@ export default {
   justify-content: center;
   width: 100%;
   height: 240px;
+  margin-top: 10px;
 }
 .banner {
   width: 1180px;

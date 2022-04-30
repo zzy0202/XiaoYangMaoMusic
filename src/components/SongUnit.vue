@@ -1,27 +1,24 @@
+<!--这个是音乐列表里的元素组件-->
 <template>
-  <div class="newSongMainContainer">
-    <SongUnit :songData="songData"></SongUnit>
+  <div class="newSongMain">
+    <div class="songUnit" v-for="(item,index) in songData">
+      <span style="margin-left: 5px;" class="songName">{{ item.name }}</span>
+      <span class="songArtist"><span class="circle"></span>{{ item.song.artists[0].name }}</span>
+      <span class="songTime">{{ item.song.duration | timeFormat }}</span>
+      <span class="album">{{ item.song.album.alias[0] }}</span>
+      <span class="operation">
+        <span class="play iconfont icon-bofang"></span>
+        <span class="video iconfont icon-yingpian" v-if="item.song.mvid!==0"></span>
+        <span class="download iconfont icon-xiazai"></span>
+      </span>
+    </div>
   </div>
 </template>
 
 <script>
-import {getNewSongRecommend} from "@/api/MusicApi";
-import SongUnit from "@/components/SongUnit";
-
 export default {
-  name: "NewSong",
-  components: {SongUnit},
-  data() {
-    return {
-      songData: [],
-    }
-  },
-  async mounted() {
-    let res = await getNewSongRecommend({limit: 10});
-    this.songData = res.result;
-    console.log(res);
-    console.log(this.songData);
-  },
+  name: "SongUnit",
+  props:['songData'],
   filters: {
     timeFormat(value) {
       let time = value / 1000;
@@ -31,6 +28,9 @@ export default {
       return parseInt(minute) + ":" + parseInt(sec);
     }
   },
+  mounted() {
+    console.log(this.songData);
+  }
 }
 </script>
 

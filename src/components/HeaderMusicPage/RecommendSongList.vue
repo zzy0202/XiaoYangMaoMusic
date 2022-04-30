@@ -8,6 +8,7 @@
       <el-pagination
           layout="prev, pager, next"
           @current-change="changePage"
+          style="margin-bottom: 20px;"
           :page-count	="largestPage">
       </el-pagination>
     </div>
