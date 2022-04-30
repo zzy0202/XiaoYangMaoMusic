@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import './assets/iconfont.css'
 
+const eventBus = new Vue();
+Vue.prototype.$eventBus = eventBus;
 Vue.config.productionTip = false
 
 new Vue({

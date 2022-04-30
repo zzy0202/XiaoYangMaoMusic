@@ -28,7 +28,6 @@ export default {
   async mounted() {
     let res = await getBanner({type: 0});
     this.bannerArray = res.banners.splice(1, 7);
-    console.log(this.bannerArray);
     setInterval(()=>{
       this.moveRight();
     },5000)
@@ -100,8 +99,7 @@ export default {
   border-radius: 8px;
   transition: all 0.8s;
   transform: translateX(0) scale(0);
-  z-index: 1;
-  opacity: 1;
+  opacity: 0;
 }
 
 .active {
@@ -112,11 +110,11 @@ export default {
 
 .activeLeft {
   transform: translateX(-320px) scale(0.9);
-  opacity: 0.7;
+  opacity: 0.5;
 }
 
 .activeRight {
   transform: translateX(320px) scale(0.9);
-  opacity: 0.7;
+  opacity: 0.5;
 }
 </style>

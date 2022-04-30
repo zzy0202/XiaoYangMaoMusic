@@ -1,5 +1,8 @@
 <template>
   <div class="home">
+    <transition name="fade">
+      <login v-if="showLogin"></login>
+    </transition>
     <div class="bgImage">
       <video autoplay="autoplay" loop="loop" muted="muted">
         <source src="https://assets.codepen.io/3364143/7btrrd.mp4" type="video/mp4">
@@ -18,13 +21,24 @@
 <script>
 import HomeHeader from "@/components/Home/HomeHeader";
 import HomeAside from "@/components/Home/HomeAside";
-import HeaderMusicPage from "@/views/HeaderMusicPage";
-import HeaderMvPage from "@/views/HeaderMvPage";
+import Login from "@/components/Home/Login";
 export default {
   name: 'Home',
+  mounted() {
+    this.$eventBus.$on('login',(show)=>{
+      this.showLogin = show;
+    })
+    console.log(this.$store.state.user);
+  },
   components: {
+    Login,
     HomeAside,
     HomeHeader
+  },
+  data() {
+    return {
+      showLogin:false,
+    }
   }
 }
 </script>
