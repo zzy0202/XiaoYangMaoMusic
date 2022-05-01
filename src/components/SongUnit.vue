@@ -3,12 +3,23 @@
   <div class="newSongMain">
     <div class="songUnit" v-for="(item,index) in songData">
       <span style="margin-left: 5px;" class="songName">{{ item.name }}</span>
-      <span class="songArtist"><span class="circle"></span>{{ item.song.artists[0].name }}</span>
-      <span class="songTime">{{ item.song.duration | timeFormat }}</span>
-      <span class="album">{{ item.song.album.alias[0] }}</span>
+      <span class="songArtist" v-if="item.song">
+        <span class="circle"></span>
+        {{ item.song.artists[0].name }}
+      </span>
+      <span class="songArtist" v-else>
+        <span class="circle"></span>
+        {{ item.artists[0].name }}
+      </span>
+      <span class="songTime" v-if="item.song">{{ item.song.duration | timeFormat }}</span>
+      <span class="songTime" v-else>{{ item.duration | timeFormat }}</span>
+
+      <span class="album" v-if="item.song">{{ item.song.album.alias[0] }}</span>
+      <span class="album" v-else>{{ item.album.name }}</span>
+
       <span class="operation">
-        <span class="play iconfont icon-bofang"></span>
-        <span class="video iconfont icon-yingpian" v-if="item.song.mvid!==0"></span>
+        <span class="play iconfont icon-bofang" @click="playSong(item)"></span>
+        <span class="video iconfont icon-yingpian" v-if="item.song&&item.song.mvid!==0"></span>
         <span class="download iconfont icon-xiazai"></span>
       </span>
     </div>
@@ -16,9 +27,10 @@
 </template>
 
 <script>
+import {getSongUrl} from "@/api/MusicApi";
 export default {
   name: "SongUnit",
-  props:['songData'],
+  props: ['songData'],
   filters: {
     timeFormat(value) {
       let time = value / 1000;
@@ -28,9 +40,15 @@ export default {
       return parseInt(minute) + ":" + parseInt(sec);
     }
   },
+  methods: {
+    async playSong(item) {
+      let res = await getSongUrl({id:item.id});
+      console.log(res);
+    }
+  },
   mounted() {
     console.log(this.songData);
-  }
+  },
 }
 </script>
 

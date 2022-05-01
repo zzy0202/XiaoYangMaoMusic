@@ -27,6 +27,24 @@ const getRecommendSongList = (params) => {
 	})
 }
 
+//获取音乐搜索内容
+const getSearchList = (params) => {
+	return request({
+		url: '/search',
+		method: "GET",
+		params,
+	})
+}
+
+//获取歌曲url
+const getSongUrl = (params) => {
+	return request({
+		url: '/song/url',
+		method: "GET",
+		params,
+	})
+}
+
 export {
-	getBanner, getNewSongRecommend, getRecommendSongList
+	getBanner, getNewSongRecommend, getRecommendSongList, getSearchList, getSongUrl
 }

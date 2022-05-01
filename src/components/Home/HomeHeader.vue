@@ -13,7 +13,7 @@
     </div>
     <div class="search">
       <span class="iconfont icon-sousuo"></span>
-      <input type="text" placeholder="搜索歌曲">
+      <input type="text" placeholder="搜索歌曲" @keyup.enter="search" v-model="keyword">
     </div>
     <div class="userPart" v-if="!isLogin">
       <svg t="1651167295788" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -49,6 +49,7 @@ export default {
       move: 0,
       active: 0,
       isLogin:false,
+      keyword:'',
     }
   },
   computed:{
@@ -101,6 +102,9 @@ export default {
     },
     login() {
       this.$eventBus.$emit('login',true);
+    },
+    search() {
+      this.$router.push({name:"Search",params:{keyword:this.keyword}});
     }
   }
 }

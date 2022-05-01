@@ -6,6 +6,7 @@ import HeaderMvPage from "@/views/HeaderMvPage";
 import HomeHeaderRadio from "@/views/HeaderRadioPage";
 import HeaderRadio from "@/views/HeaderRadioPage";
 import HeaderRadioPage from "@/views/HeaderRadioPage";
+import Search from "@/views/Search";
 
 Vue.use(VueRouter)
 
@@ -26,6 +27,10 @@ const routes = [
       path: 'radio',
       name:"HeaderRadioPage",
       component: HeaderRadioPage,
+    },{
+      path: '/search',
+      name:"Search",
+      component: Search,
     }]
   },
 ]
