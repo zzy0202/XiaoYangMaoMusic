@@ -31,7 +31,7 @@ export default {
     console.log(this.songListArr);
     setTimeout(()=>{
       this.isLoading = false;
-    },2000)
+    },700)
   }
 }
 </script>

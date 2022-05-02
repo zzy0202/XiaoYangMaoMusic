@@ -1,6 +1,6 @@
 <template>
   <div class="searchMainContainer">
-    <Loading v-if="isLoading"></Loading>
+    <Loading v-if="isLoading" class="loading"></Loading>
     <div v-else>
       <h2 class="title">{{ $route.params.keyword }}</h2>
       <span class="result">为你找到{{ resultCount }}个内容</span>
@@ -11,16 +11,15 @@
             <el-pagination
                 layout="prev, pager, next"
                 @current-change="changePage"
+                :current-page="currentPage"
                 style="margin-bottom: 20px;"
-                :page-count="Math.ceil(resultCount/30)">
+                :page-count="1000">
             </el-pagination>
           </div>
         </el-tab-pane>
         <el-tab-pane label="歌单" name="second">
           <SongListUnit v-if="searchSongListArr" :songListArr="searchSongListArr"></SongListUnit>
         </el-tab-pane>
-        <el-tab-pane label="MV" name="third">角色管理</el-tab-pane>
-        <el-tab-pane label="热门评论" name="fourth">定时任务补偿</el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -46,7 +45,7 @@ export default {
       resultCount: 0,
       activeName: 'first',
       isLoading: true,
-      currentPage:1,
+      currentPage: 1,
     }
   },
   async mounted() {
@@ -61,7 +60,7 @@ export default {
   methods: {
     getSongResult() {
       this.isLoading = true;
-      getSearchList({keywords: this.$route.params.keyword,offset:(this.currentPage-1)*30}).then((res) => {
+      getSearchList({keywords: this.$route.params.keyword, offset: (this.currentPage - 1) * 30}).then((res) => {
         if (res) {
           this.resultCount = res.result.songCount;
           this.searchSongArr = res.result.songs;
@@ -98,7 +97,13 @@ export default {
   border-radius: 10px;
   max-width: 1334px;
   background-color: rgba(36, 39, 59, 0.4);
+  position: relative;
+  .loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
 
+  }
   .title {
     color: white;
     display: inline-block;

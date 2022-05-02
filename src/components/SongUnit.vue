@@ -41,7 +41,7 @@ export default {
   watch: {
     songData: {
       handler(newValue, oldValue) {
-         this.songData = newValue;
+        this.songData = newValue;
       },
       immediate: true,
     }
@@ -57,11 +57,29 @@ export default {
   },
   methods: {
     async playSong(item) {
-      console.log(item);
       let res = await getSongUrl({id: item.id});
       let lyric = await getSongLyric({id: item.id});
       let songDetails = await getSongDetails({ids: item.id});
-      this.$eventBus.$emit('playSong', {res: res, songDetails: item, lyric, songDetailsCover: songDetails.songs[0]});
+      let audio = {
+        name: '',
+        url: '',
+        cover: '',
+        lrc: '',
+        artist: '',
+      }
+      console.log(songDetails);
+      console.log(lyric);
+      console.log(res);
+      audio.name = songDetails.songs[0].al.name;
+      if (songDetails && !songDetails.song) {
+        audio.artist = songDetails.songs[0].ar[0].name;
+      } else {
+        audio.artist = songDetails.song.artists[0].name;
+      }
+      audio.url = res.data[0].url;
+      audio.lrc = lyric.lrc.lyric;
+      audio.cover = songDetails.songs[0].al.picUrl;
+      this.$store.commit('addSong', audio);
     }
   },
   mounted() {

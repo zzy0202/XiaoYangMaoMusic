@@ -1,45 +1,35 @@
 <template>
-  <aplayer class="player" ref="aplayer" :autoplay="true" :audio="audio" :fixed="true" :lrcType="1" @ended="end"/>
+  <aplayer class="player" ref="aplayer" :autoplay="true" :audio="audio" @listAdd="addSong" :fixed="true" :lrcType="1"
+           @ended="end"/>
 </template>
 
 <script>
+import {mapState} from "vuex";
+
 export default {
   name: "MusicPlayer",
+  data() {
+    return {}
+  },
   mounted() {
-    this.$eventBus.$on('playSong', (res) => {
-      console.log('我是APLAYER');
-      console.log(res);
-      this.audio.name = res.songDetails.name;
-      if(res.songDetails&&!res.songDetails.song) {
-        this.audio.artist = res.songDetails.artists[0].name;
-      }
-      else {
-        this.audio.artist = res.songDetails.song.artists[0].name;
-      }
-      this.audio.url = res.res.data[0].url;
-      this.audio.lrc = res.lyric.lrc.lyric;
-      this.audio.cover = res.songDetailsCover.al.picUrl
-      // this.audio.cover = res.res.
-      const aplayerApp = this.$refs.aplayer;
-      aplayerApp.play();
-      aplayerApp.play();
+    setTimeout(() => {
+      console.log(this.audio);
+    }, 5000)
+  },
+  computed: {
+    ...mapState({
+      audio: state => state.audio,
     })
   },
-  data() {
-    return {
-      audio: {
-        name: '',
-        artist: '',
-        url: '',
-        cover: '',
-        lrc: "",
-      },
-    }
-  },
-  methods:{
+  methods: {
     end() {
-      alert('结束!');
-      this.$refs.aplayer.pause();
+      this.$refs.aplayer.play();
+    },
+    addSong() {
+      const aplayer_app = this.$refs.aplayer;
+      const countSong = this.$store.state.audio.length - 1;
+      aplayer_app.switch(countSong);
+      aplayer_app.play();
     }
   }
 }

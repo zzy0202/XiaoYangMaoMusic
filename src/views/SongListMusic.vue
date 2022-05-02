@@ -55,7 +55,6 @@ export default {
         getSongStr += songListDatum.id + ',';
       }
       getSongStr = getSongStr.substring(0, getSongStr.length - 1);
-      console.log(getSongStr);
       let result;
       result = await getSongDetails({ids: getSongStr});
       this.toShowSongUnit = result.songs;
@@ -68,7 +67,6 @@ export default {
     }
   },
   beforeRouteEnter(to, from, next) {
-    console.log('kskskksk')
     next(vm => {
       vm.getMusicList();
       vm.isLoading = true;
