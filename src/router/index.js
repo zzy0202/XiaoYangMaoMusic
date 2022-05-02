@@ -21,31 +21,31 @@ const routes = [
 		children: [{
 			path: '',
 			name: "HeaderMusicPage",
-			component: HeaderMusicPage,
+			component: () => import(/* webpackChunkName: "Home" */ '../views/HeaderMusicPage.vue')
 		}, {
 			path: 'mv',
 			name: "HeaderMVPage",
-			component: HeaderMvPage,
+			component: () => import(/* webpackChunkName: "HeaderMvPage" */ '../views/HeaderMvPage.vue'),
 		}, {
 			path: 'radio',
 			name: "HeaderRadioPage",
-			component: HeaderRadioPage,
+			component: () => import(/* webpackChunkName: "HeaderRadioPage" */ '../views/HeaderRadioPage.vue'),
 		}, {
-			path: '/search',
+			path: '/search/:keyword',
 			name: "Search",
-			component: Search,
+			component: () => import(/* webpackChunkName: "Search" */ '../views/Search.vue'),
 		}, {
-			path: '/songList',
+			path: '/songList/:id',
 			name: "SongList",
-			component: SongListMusic,
+			component: () => import(/* webpackChunkName: "SongList" */ '../views/SongListMusic.vue'),
 		}, {
 			path: '/mv/:id',
 			name: 'Mv',
-			component: MvVideoPage,
+			component: () => import(/* webpackChunkName: "MvVideoPage" */ '../views/MvVideoPage.vue'),
 		}, {
 			path: '/mySongList',
 			name: "MySongList",
-			component: MySongList,
+			component: () => import(/* webpackChunkName: "MySongList" */ '../views/MySongList.vue'),
 		}]
 	},
 ]

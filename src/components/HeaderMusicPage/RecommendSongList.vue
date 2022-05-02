@@ -32,7 +32,7 @@ export default {
       this.loadSongList(offset)
     },
     async loadSongList(offset) {
-      let res = await getRecommendSongList({limit: 15, offset: offset * 15});
+      let res = await getRecommendSongList({limit: 15, offset: (offset-1) * 15});
       console.log(res);
       this.largestPage = Math.floor(res.total / 15);
       this.songListArr = res.playlists;

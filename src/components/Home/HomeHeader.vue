@@ -32,7 +32,7 @@
             p-id="18418" fill="#ffffff"></path>
       </svg>
       <img class="avatar" :src="user.profile.avatarUrl">
-      <span>{{user.profile.nickname}}</span>
+      <span>{{ user.profile.nickname }}</span>
       <span style="font-size: 15px" @click="login">退出账户</span>
     </div>
   </div>
@@ -41,6 +41,7 @@
 <script>
 import {mapState} from 'vuex';
 import {getLoginStatus} from "@/api/loginApi";
+
 export default {
   name: "HomeHeader",
   data() {
@@ -48,22 +49,20 @@ export default {
       categories: ['音乐', 'MV', '电台', '开发中'],
       move: 0,
       active: 0,
-      isLogin:false,
-      keyword:'',
+      isLogin: false,
+      keyword: '',
     }
   },
-  computed:{
+  computed: {
     ...mapState({
-      user:(state)=>state.user,
+      user: (state) => state.user,
     }),
   },
   async mounted() {
     //此时已经在登录状态了
-    console.log(this.user);
-    console.log(JSON.parse(localStorage.userInfo));
-    if(this.user){
+    if (this.user) {
       let res = await getLoginStatus();
-      if(res.data.code===200) {
+      if (res.data.code === 200) {
         this.isLogin = true;
       }
     }
@@ -72,41 +71,39 @@ export default {
 
     }
   },
-  watch:{
-    $route:{
-      handler:function (newVal,oldVal){
+  watch: {
+    $route: {
+      handler: function (newVal, oldVal) {
         let moveObj = new Map();
-        moveObj.set('HeaderMusicPage',0);
-        moveObj.set('HeaderMVPage',1);
-        moveObj.set('HeaderRadioPage',2);
-        this.move = moveObj.get(newVal.name)*114.2;
+        moveObj.set('HeaderMusicPage', 0);
+        moveObj.set('HeaderMVPage', 1);
+        moveObj.set('HeaderRadioPage', 2);
+        this.move = moveObj.get(newVal.name) * 114.2;
         this.active = moveObj.get(newVal.name);
       },
-      immediate:true,
+      immediate: true,
     }
   },
   methods: {
     moveBar(index) {
       this.active = index;
-      this.move = 114.2 * (index);
-      if(index===0) {
-        this.$router.push({name:"HeaderMusicPage"});
-      }
-      else if(index===1) {
-        this.$router.push({name:"HeaderMVPage"})
-      }
-      else if(index===2) {
-        this.$router.push({name:"HeaderRadioPage"})
-      }
-      else if(index===3) {
+      this.move = 111.2 * (index);
+      if (index === 0) {
+        this.$router.push({name: "HeaderMusicPage"});
+      } else if (index === 1) {
+        this.$router.push({name: "HeaderMVPage"})
+      } else if (index === 2) {
+        this.$router.push({name: "HeaderRadioPage"})
+      } else if (index === 3) {
 
       }
     },
     login() {
-      this.$eventBus.$emit('login',true);
+      this.$eventBus.$emit('login', true);
     },
     search() {
-      this.$router.push({name:"Search",params:{keyword:this.keyword}});
+      this.$eventBus.$emit('searchSong', this.keyword);
+      this.$router.push({name: "Search", params: {keyword: this.keyword}});
     }
   }
 }
@@ -119,6 +116,7 @@ export default {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
   .webFunction {
     display: flex;
     align-items: center;
@@ -161,7 +159,7 @@ export default {
     }
 
     .moveBar {
-      width: 114.2px;
+      width: 111.2px;
       height: 2px;
       background-color: white;
       position: absolute;
@@ -217,6 +215,7 @@ export default {
       height: 20px;
       text-align: center;
     }
+
     .avatar {
       margin-left: 10px;
       width: 35px;
@@ -232,9 +231,10 @@ export default {
       transition: all 0.5s;
       font-size: 15px;
     }
+
     span:hover,
     .avatar:hover,
-    svg:hover{
+    svg:hover {
       color: ghostwhite;
       cursor: pointer;
     }

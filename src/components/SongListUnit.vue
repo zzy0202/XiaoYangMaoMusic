@@ -27,7 +27,7 @@ export default {
   align-items: center;
   margin-top: 20px;
   margin-bottom: 30px;
-  width: 95%;
+  width: 1267px;
   flex-wrap: wrap;
 }
 

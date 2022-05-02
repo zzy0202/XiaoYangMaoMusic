@@ -32,6 +32,20 @@ import {getSongDetails, getSongLyric, getSongUrl} from "@/api/MusicApi";
 export default {
   name: "SongUnit",
   props: ['songData'],
+  components: {},
+  data() {
+    return {
+      isLoading: true,
+    }
+  },
+  watch: {
+    songData: {
+      handler(newValue, oldValue) {
+         this.songData = newValue;
+      },
+      immediate: true,
+    }
+  },
   filters: {
     timeFormat(value) {
       let time = value / 1000;
@@ -86,11 +100,11 @@ export default {
 }
 
 .songName {
-  flex: 2.5;
+  width: 466px;
 }
 
 .songArtist {
-  flex: 1.1;
+  width: 205px;
   display: flex;
   justify-content: flex-start;
   align-items: center;

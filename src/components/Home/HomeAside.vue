@@ -2,7 +2,7 @@
   <div class="main">
     <div class="recommend">
       <div class="title">推荐</div>
-      <div class="content" v-for="(item,index) in recommendList" :key="index">{{ item }}</div>
+      <div class="content" @click="goPage(item)" v-for="(item,index) in recommendList" :key="index">{{ item }}</div>
     </div>
     <div class="myMusic">
       <div class="title">个人小世界</div>
@@ -27,11 +27,13 @@ export default {
   methods: {
     goPage(item) {
       if (item === '我的歌单') {
-        this.$router.push({path:'/mySongList'});
+        this.$router.push({path: '/mySongList'});
       } else if (item === '我的电台') {
 
       } else if (item === '本地与下载') {
 
+      } else if (item === '猜你喜欢') {
+        this.$router.push({path:'/'});
       }
     }
   }

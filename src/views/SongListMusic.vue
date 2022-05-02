@@ -1,29 +1,33 @@
 <!--这个是点进去后的歌单页面-->
 <template>
-  <div class="songListMusicMain" v-if="!isLoading">
-    <div class="header">
-      <img :src="songListData.coverImgUrl" class="coverImg" alt="">
-      <div class="content">
-        <h3>{{ songListData.name }}</h3>
-        <div class="creator" style="display: flex;justify-content: flex-start; align-items: center">
-          <img class="avatar" :src="songListData.creator.avatarUrl" alt="">
-          <span>{{ songListData.creator.nickname }}</span>
+  <div class="songListMusicMain">
+    <Loading v-if="isLoading" class="loading"></Loading>
+    <div v-if="!isLoading">
+      <div class="header">
+        <img :src="songListData.coverImgUrl" class="coverImg" alt="">
+        <div class="content">
+          <h3>{{ songListData.name }}</h3>
+          <div class="creator" style="display: flex;justify-content: flex-start; align-items: center">
+            <img class="avatar" :src="songListData.creator.avatarUrl" alt="">
+            <span>{{ songListData.creator.nickname }}</span>
+          </div>
+          <span class="tags">标签:{{ songListData.tags.join(' ') }}</span>
+          <span class="description">简介:{{ songListData.description }}</span>
         </div>
-        <span class="tags">标签:{{ songListData.tags.join(' ') }}</span>
-        <span class="description">简介:{{ songListData.description }}</span>
       </div>
+      <SongUnit :songData="toShowSongUnit"></SongUnit>
     </div>
-    <SongUnit :songData="toShowSongUnit"></SongUnit>
   </div>
 </template>
 
 <script>
 import {getSongListMusic, getSongDetails} from "@/api/MusicApi";
 import SongUnit from "@/components/SongUnit";
+import Loading from "@/components/Loading"
 //dt 是歌曲时间
 export default {
   name: "SongListMusic",
-  components: {SongUnit},
+  components: {Loading, SongUnit},
   data() {
     return {
       songListData: [],
@@ -40,7 +44,6 @@ export default {
       this.songListData = result.playlist;                 //这个是歌单详情页数据
       this.songListEverySong = result.playlist.trackIds;   //这个是歌单里面的歌曲id数据
       await this.getSongListSong();
-      this.isLoading = false;
     },
     async getSongListSong() {     //获取歌单里面的每一首歌
       let start = this.currentPage * 20;    //获取歌页里开始的第一首歌
@@ -61,11 +64,14 @@ export default {
         item.artists = item.ar;
         item.duration = item.dt;
       }
+      this.isLoading = false;
     }
   },
   beforeRouteEnter(to, from, next) {
+    console.log('kskskksk')
     next(vm => {
       vm.getMusicList();
+      vm.isLoading = true;
     });
   }
 }
@@ -76,8 +82,8 @@ export default {
   width: 1334px;
   background-color: rgba(36, 39, 59, 0.4);
   overflow: scroll;
+  position: relative;
 }
-
 .header {
   width: 1236px;
   margin: 10px auto;

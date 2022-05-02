@@ -1,5 +1,5 @@
 <template>
-  <aplayer class="player" ref="aplayer" :autoplay="true" :audio="audio" :fixed="true" :lrcType="1" />
+  <aplayer class="player" ref="aplayer" :autoplay="true" :audio="audio" :fixed="true" :lrcType="1" @ended="end"/>
 </template>
 
 <script>
@@ -36,6 +36,12 @@ export default {
       },
     }
   },
+  methods:{
+    end() {
+      alert('结束!');
+      this.$refs.aplayer.pause();
+    }
+  }
 }
 </script>
 

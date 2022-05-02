@@ -1,17 +1,28 @@
 <template>
   <div class="searchMainContainer">
-    <h2 class="title">{{ $route.params.keyword }}</h2>
-    <span class="result">为你找到{{ resultCount }}个内容</span>
-    <el-tabs class="tab" v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="歌曲列表" name="first">
-        <SongUnit style="margin: 0 auto" :songData="searchSongArr"></SongUnit>
-      </el-tab-pane>
-      <el-tab-pane label="歌单" name="second">
-        <SongListUnit :songListArr="searchSongListArr"></SongListUnit>
-      </el-tab-pane>
-      <el-tab-pane label="MV" name="third">角色管理</el-tab-pane>
-      <el-tab-pane label="热门评论" name="fourth">定时任务补偿</el-tab-pane>
-    </el-tabs>
+    <Loading v-if="isLoading"></Loading>
+    <div v-else>
+      <h2 class="title">{{ $route.params.keyword }}</h2>
+      <span class="result">为你找到{{ resultCount }}个内容</span>
+      <el-tabs class="tab" v-model="activeName">
+        <el-tab-pane label="歌曲列表" name="first">
+          <SongUnit v-if="searchSongArr.length" style="margin: 0 auto 30px" :songData="searchSongArr"></SongUnit>
+          <div style="display: flex;justify-content: center;">
+            <el-pagination
+                layout="prev, pager, next"
+                @current-change="changePage"
+                style="margin-bottom: 20px;"
+                :page-count="Math.ceil(resultCount/30)">
+            </el-pagination>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="歌单" name="second">
+          <SongListUnit v-if="searchSongListArr" :songListArr="searchSongListArr"></SongListUnit>
+        </el-tab-pane>
+        <el-tab-pane label="MV" name="third">角色管理</el-tab-pane>
+        <el-tab-pane label="热门评论" name="fourth">定时任务补偿</el-tab-pane>
+      </el-tabs>
+    </div>
   </div>
 </template>
 
@@ -19,45 +30,59 @@
 import {getSearchList} from "@/api/MusicApi";
 import SongUnit from "@/components/SongUnit";
 import SongListUnit from "@/components/SongListUnit";
+import Loading from "@/components/Loading"
+
 export default {
   name: "Search",
   components: {
+    Loading,
     SongListUnit,
     SongUnit,
   },
   data() {
     return {
       searchSongArr: [],
-      searchSongListArr:[],
+      searchSongListArr: [],
       resultCount: 0,
-      msg: "TESTING",
       activeName: 'first',
+      isLoading: true,
+      currentPage:1,
     }
   },
-  mounted() {
-
+  async mounted() {
+    this.$eventBus.$on('searchSong', async (get) => {
+      this.$route.params.keyword = get;
+      await this.getSongResult();
+      await this.getSongListResult();
+    })
+    this.getSongListResult();
+    this.getSongResult()
   },
   methods: {
-    async getSongResult() {
-      getSearchList({keywords: this.$route.params.keyword}).then((res) => {
+    getSongResult() {
+      this.isLoading = true;
+      getSearchList({keywords: this.$route.params.keyword,offset:(this.currentPage-1)*30}).then((res) => {
         if (res) {
           this.resultCount = res.result.songCount;
           this.searchSongArr = res.result.songs;
-          console.log(this.searchSongArr);
+          this.isLoading = false;
+          this.$forceUpdate();
         }
       });
     },
-    async getSongListResult() {
-      getSearchList({keywords: this.$route.params.keyword, type: 1000,limit:28}).then((res) => {
+    getSongListResult() {
+      getSearchList({keywords: this.$route.params.keyword, type: 1000, limit: 28}).then((res) => {
         this.searchSongListArr = res.result.playlists;
-        console.log(this.searchSongListArr);
+        this.$forceUpdate();
       })
     },
-    handleClick(tab, event) {
+    changePage(offset) {
+      this.currentPage = offset;
+      this.getSongResult();
     }
   },
   beforeRouteEnter(to, from, next) {
-    next(vm => {
+    next((vm) => {
       vm.getSongResult();
       vm.getSongListResult();
     });
@@ -73,6 +98,7 @@ export default {
   border-radius: 10px;
   max-width: 1334px;
   background-color: rgba(36, 39, 59, 0.4);
+
   .title {
     color: white;
     display: inline-block;
@@ -108,6 +134,19 @@ export default {
 
 ::v-deep .el-tabs__item:hover {
   color: white;
+}
+
+::v-deep .el-pager li,
+::v-deep .el-pagination .btn-next,
+::v-deep .el-pagination .btn-prev,
+::v-deep .el-pager li.btn-quicknext,
+::v-deep .el-pager li.btn-quickprev {
+  background: none;
+  color: white;
+}
+
+::v-deep .el-pagination.is-background .el-pager li:not(.disabled).active {
+  background-color: transparent;
 }
 
 ::-webkit-scrollbar {
