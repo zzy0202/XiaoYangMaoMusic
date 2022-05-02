@@ -27,7 +27,8 @@
 </template>
 
 <script>
-import {getSongUrl} from "@/api/MusicApi";
+import {getSongDetails, getSongLyric, getSongUrl} from "@/api/MusicApi";
+
 export default {
   name: "SongUnit",
   props: ['songData'],
@@ -36,14 +37,17 @@ export default {
       let time = value / 1000;
       let minute = time / 60;
       let sec = time % 60;
-      sec = sec < 10 ? '0' + sec : sec;
-      return parseInt(minute) + ":" + parseInt(sec);
+      sec = sec < 10 ? '0' + parseInt(sec) : parseInt(sec);
+      return parseInt(minute) + ":" + sec;
     }
   },
   methods: {
     async playSong(item) {
-      let res = await getSongUrl({id:item.id});
-      console.log(res);
+      console.log(item);
+      let res = await getSongUrl({id: item.id});
+      let lyric = await getSongLyric({id: item.id});
+      let songDetails = await getSongDetails({ids: item.id});
+      this.$eventBus.$emit('playSong', {res: res, songDetails: item, lyric, songDetailsCover: songDetails.songs[0]});
     }
   },
   mounted() {
@@ -86,7 +90,7 @@ export default {
 }
 
 .songArtist {
-  flex: 1;
+  flex: 1.1;
   display: flex;
   justify-content: flex-start;
   align-items: center;

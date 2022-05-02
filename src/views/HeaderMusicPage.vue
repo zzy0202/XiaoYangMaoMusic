@@ -18,6 +18,9 @@ export default {
     RecommendSongList,
     Banner,NewSong,
   },
+  activated() {
+    console.log('kskskks');
+  }
 }
 </script>
 

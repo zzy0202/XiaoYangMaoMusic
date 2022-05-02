@@ -1,15 +1,12 @@
 <template>
   <div class="recommendMainContent" v-if="!isLoading">
-    <div class="songListUnit" v-for="(item,index) in songListArr">
-      <img :src="item.coverImgUrl" alt="">
-      <span>{{ item.name }}</span>
-    </div>
+    <SongListUnit :songListArr="songListArr"></SongListUnit>
     <div style="display: flex;justify-content: center;width: 100%">
       <el-pagination
           layout="prev, pager, next"
           @current-change="changePage"
           style="margin-bottom: 20px;"
-          :page-count	="largestPage">
+          :page-count="largestPage">
       </el-pagination>
     </div>
   </div>
@@ -17,15 +14,17 @@
 
 <script>
 import {getRecommendSongList} from "@/api/MusicApi";
+import SongListUnit from "@/components/SongListUnit";
 
 export default {
   name: "RecommendSongList",
+  components: {SongListUnit},
   data() {
     return {
       songListArr: [],
-      currentPage:1,
-      isLoading:true,
-      largestPage:0,
+      currentPage: 1,
+      isLoading: true,
+      largestPage: 0,
     }
   },
   methods: {
@@ -33,29 +32,29 @@ export default {
       this.loadSongList(offset)
     },
     async loadSongList(offset) {
-      let res = await getRecommendSongList({limit: 15,offset:offset*15});
+      let res = await getRecommendSongList({limit: 15, offset: offset * 15});
       console.log(res);
-      this.largestPage = Math.floor(res.total/15);
+      this.largestPage = Math.floor(res.total / 15);
       this.songListArr = res.playlists;
     }
   },
   async mounted() {
     await this.loadSongList(1);
-    this.isLoading=false;
+    this.isLoading = false;
   },
 }
 </script>
 
 <style scoped lang="less">
 .recommendMainContent {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 20px;
-  margin-bottom: 30px;
-  width: 95%;
-  height: 800px;
-  flex-wrap: wrap;
+  //display: flex;
+  //justify-content: space-between;
+  //align-items: center;
+  //margin-top: 20px;
+  //margin-bottom: 30px;
+  //width: 95%;
+  //height: 800px;
+  //flex-wrap: wrap;
 }
 
 .songListUnit {

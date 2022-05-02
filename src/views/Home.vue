@@ -71,10 +71,10 @@ export default {
 
 .mainContent {
   width: 1600px;
-  height: 850px;
+  height: 800px;
   background-color: rgba(82, 18, 34, 0.5);
   position: fixed;
-  top: 50%;
+  top: 47%;
   left: 50%;
   margin: -400px 0 0 -800px;
   border-radius: 20px;

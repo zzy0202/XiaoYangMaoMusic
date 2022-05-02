@@ -5,8 +5,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    // user:JSON.parse(localStorage.user)?JSON.parse(localStorage.user):null,
-    user:JSON.parse(localStorage.userInfo)
+    user:localStorage.userInfo?JSON.parse(localStorage.userInfo):null,
   },
   mutations: {
     setUserLogin(state,payload) {

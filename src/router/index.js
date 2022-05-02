@@ -7,43 +7,48 @@ import HomeHeaderRadio from "@/views/HeaderRadioPage";
 import HeaderRadio from "@/views/HeaderRadioPage";
 import HeaderRadioPage from "@/views/HeaderRadioPage";
 import Search from "@/views/Search";
+import SongListMusic from "@/views/SongListMusic";
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home,
-    children:[{
-      path:'',
-      name:"HeaderMusicPage",
-      component:HeaderMusicPage,
-    },{
-      path: 'mv',
-      name:"HeaderMVPage",
-      component: HeaderMvPage,
-    },{
-      path: 'radio',
-      name:"HeaderRadioPage",
-      component: HeaderRadioPage,
-    },{
-      path: '/search',
-      name:"Search",
-      component: Search,
-    }]
-  },
+	{
+		path: '/',
+		name: 'Home',
+		component: Home,
+		children: [{
+			path: '',
+			name: "HeaderMusicPage",
+			component: HeaderMusicPage,
+		}, {
+			path: 'mv',
+			name: "HeaderMVPage",
+			component: HeaderMvPage,
+		}, {
+			path: 'radio',
+			name: "HeaderRadioPage",
+			component: HeaderRadioPage,
+		}, {
+			path: '/search',
+			name: "Search",
+			component: Search,
+		}, {
+			path: '/songList',
+			name: "SongList",
+			component: SongListMusic,
+		}]
+	},
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+	mode: 'history',
+	base: process.env.BASE_URL,
+	routes
 })
 
 const originalPush = VueRouter.prototype.push
-VueRouter.prototype.push = function push (location) {
-  return originalPush.call(this, location).catch(err => err)
+VueRouter.prototype.push = function push(location) {
+	return originalPush.call(this, location).catch(err => err)
 }
 
 export default router

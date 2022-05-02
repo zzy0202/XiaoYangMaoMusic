@@ -59,6 +59,8 @@ export default {
   },
   async mounted() {
     //此时已经在登录状态了
+    console.log(this.user);
+    console.log(JSON.parse(localStorage.userInfo));
     if(this.user){
       let res = await getLoginStatus();
       if(res.data.code===200) {
@@ -199,6 +201,7 @@ export default {
       input-placehoder: white;
       background-color: rgba(31, 32, 47, 0.66);
       outline: none;
+      border-radius: 50px;
     }
   }
 

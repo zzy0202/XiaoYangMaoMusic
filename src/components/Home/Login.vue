@@ -66,10 +66,10 @@ export default {
       }, 1000)
     },
     async loginPassword() {
-      // let res = await login({phone: this.phoneNumber, password: this.password});
-      // this.$store.commit('setUserLogin',res);
-      let res=200;
-      if(res === 200) {
+      let res = await login({phone: this.phoneNumber, password: this.password});
+      console.log(res);
+      this.$store.commit('setUserLogin',res);
+      if(res.code === 200) {
         this.loginSuccess = true;
         let timer = setTimeout(()=>{
           this.$eventBus.$emit('login',false);
