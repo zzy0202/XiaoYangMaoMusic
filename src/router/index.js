@@ -8,6 +8,8 @@ import HeaderRadio from "@/views/HeaderRadioPage";
 import HeaderRadioPage from "@/views/HeaderRadioPage";
 import Search from "@/views/Search";
 import SongListMusic from "@/views/SongListMusic";
+import MvVideoPage from "@/views/MvVideoPage";
+import MySongList from "@/views/MySongList";
 
 Vue.use(VueRouter)
 
@@ -36,6 +38,14 @@ const routes = [
 			path: '/songList',
 			name: "SongList",
 			component: SongListMusic,
+		}, {
+			path: '/mv/:id',
+			name: 'Mv',
+			component: MvVideoPage,
+		}, {
+			path: '/mySongList',
+			name: "MySongList",
+			component: MySongList,
 		}]
 	},
 ]

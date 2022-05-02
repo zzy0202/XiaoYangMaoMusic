@@ -2,11 +2,11 @@
   <div class="main">
     <div class="recommend">
       <div class="title">推荐</div>
-      <div class="content" v-for="(item,index) in recommendList" :key="index">{{item}}</div>
+      <div class="content" v-for="(item,index) in recommendList" :key="index">{{ item }}</div>
     </div>
     <div class="myMusic">
       <div class="title">个人小世界</div>
-      <div class="content" v-for="(item,index) in myList" :key="index">{{item}}</div>
+      <div class="content" @click="goPage(item)" v-for="(item,index) in myList" :key="index">{{ item }}</div>
     </div>
     <div class="theme">
       <div class="title">美化</div>
@@ -20,9 +20,19 @@ export default {
   name: "HomeAside",
   data() {
     return {
-      recommendList:['猜你喜欢','歌曲搜索'],
-      myList:['我的收藏','我的电台','本地与下载','音乐硬盘','最近播放','默认列表'],
+      recommendList: ['猜你喜欢', '歌曲搜索'],
+      myList: ['我的歌单', '我的电台', '本地与下载', '音乐硬盘', '最近播放', '默认列表'],
+    }
+  },
+  methods: {
+    goPage(item) {
+      if (item === '我的歌单') {
+        this.$router.push({path:'/mySongList'});
+      } else if (item === '我的电台') {
 
+      } else if (item === '本地与下载') {
+
+      }
     }
   }
 }
@@ -32,11 +42,13 @@ export default {
 .main {
   width: 266px;
   height: 742px;
-  .recommend,.myMusic,.theme {
+
+  .recommend, .myMusic, .theme {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+
     .title {
       width: 187px;
       height: 23px;
@@ -45,6 +57,7 @@ export default {
       color: #959292;
       margin-top: 8px;
     }
+
     .content {
       width: 180px;
       height: 21px;
@@ -55,6 +68,7 @@ export default {
       transition: all 0.5s;
       border-radius: 8px;
     }
+
     .content:hover {
       background-color: rgb(90, 44, 66);
       cursor: pointer;

@@ -72,6 +72,33 @@ const getSongListMusic = (params) => {
 	})
 }
 
+//获取最新MV
+const getLatestMv = (params) => {
+	return request({
+		url: '/mv/first',
+		method: "GET",
+		params,
+	})
+}
+
+//获取MV的url地址
+const getMVUrl = (params) => {
+	return request({
+		url: '/mv/url',
+		method: "GET",
+		params,
+	})
+}
+
+//获取MV评论数据
+const getMVComment = (params) => {
+	return request({
+		url: '/comment/mv',
+		method: "GET",
+		params,
+	})
+}
+
 export {
 	getBanner,
 	getNewSongRecommend,
@@ -81,4 +108,6 @@ export {
 	getSongLyric,
 	getSongDetails,
 	getSongListMusic,
+	getLatestMv,
+	getMVUrl,
 }

@@ -23,7 +23,7 @@ export default {
 <style scoped>
 .songListUnitMain {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   margin-top: 20px;
   margin-bottom: 30px;

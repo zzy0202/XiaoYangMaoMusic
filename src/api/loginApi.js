@@ -38,6 +38,14 @@ const getUser = (params) => {
 	})
 }
 
+const getUserPlayList = (params) => {
+	return request({
+		url: '/user/playlist',
+		method: "GET",
+		params,
+	})
+}
+
 export {
-	getVerifyCode, login, getLoginStatus, getUser,
+	getVerifyCode, login, getLoginStatus, getUser, getUserPlayList,
 }

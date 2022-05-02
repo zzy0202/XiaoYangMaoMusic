@@ -28,6 +28,7 @@ import HomeHeader from "@/components/Home/HomeHeader";
 import HomeAside from "@/components/Home/HomeAside";
 import Login from "@/components/Home/Login";
 import MusicPlayer from "@/components/MusicPlayer";
+
 export default {
   name: 'Home',
   mounted() {
@@ -102,6 +103,7 @@ export default {
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
+
 .player {
   //width: 200px;
   //height: 40px;
