@@ -13,7 +13,7 @@
       <transition :name="showRight?'right':'left'" mode="out-in">
         <div class="inputMain" style="margin-top: 0.1rem;" v-if="!showRight" key="password">
           <input v-model="phoneNumber" placeholder="手机号" class="phoneNumber">
-          <input v-model="password" placeholder="密码" class="password">
+          <input type="password" v-model="password" placeholder="密码" class="password">
           <button class="loginSubmit" @click="loginPassword">登录</button>
         </div>
         <div class="inputMain" style="margin-top: 0.1rem;position: relative" v-if="showRight" key="verifyCode">
@@ -77,10 +77,23 @@ export default {
           this.$eventBus.$emit('login', false);
         }, 3000)
       }
+      else {
+        this.$eventBus.$emit('showMessage',{msg:'登录失败,手机号或密码错误'})
+      }
     },
     async loginVerify() {
       let res = await login({phone: this.phoneNumber, captcha: this.captcha});
-      console.log(res);
+      this.$store.commit('setUserLogin', res);
+      if (res.code === 200) {
+        this.loginSuccess =true;
+        let timer = setTimeout(() => {
+          this.$router.go(0);
+          this.$eventBus.$emit('login', false);
+        }, 3000)
+      }
+      else {
+
+      }
     },
     async getInfo() {
       console.log(this.$store.state.user);
