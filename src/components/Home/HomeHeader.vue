@@ -33,14 +33,14 @@
       </svg>
       <img class="avatar" :src="user.profile.avatarUrl">
       <span>{{ user.profile.nickname }}</span>
-      <span style="font-size: 15px" @click="login">退出账户</span>
+      <span style="font-size: 15px" @click="logout">退出账户</span>
     </div>
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex';
-import {getLoginStatus} from "@/api/loginApi";
+import {getLoginStatus, logout} from "@/api/loginApi";
 
 export default {
   name: "HomeHeader",
@@ -59,9 +59,10 @@ export default {
     }),
   },
   async mounted() {
-    //此时已经在登录状态了
+    //此时已经在账号状态了
     if (this.user) {
       let res = await getLoginStatus();
+      //判断账号token是否还在登录
       if (res.data.code === 200) {
         this.isLogin = true;
       }
@@ -104,6 +105,13 @@ export default {
     search() {
       this.$eventBus.$emit('searchSong', this.keyword);
       this.$router.push({name: "Search", params: {keyword: this.keyword}});
+    },
+    async logout() {
+      let res = await logout();
+      if(res.code===200) {
+        localStorage.removeItem('userInfo');
+        location.reload();
+      }
     }
   }
 }

@@ -99,6 +99,14 @@ const getMVComment = (params) => {
 	})
 }
 
+const checkMusicAbility = (params) => {
+	return request({
+		url: '/check/music',
+		method: "GET",
+		params,
+	})
+}
+
 export {
 	getBanner,
 	getNewSongRecommend,
@@ -110,4 +118,5 @@ export {
 	getSongListMusic,
 	getLatestMv,
 	getMVUrl,
+	checkMusicAbility,
 }

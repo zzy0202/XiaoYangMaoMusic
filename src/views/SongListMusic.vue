@@ -16,6 +16,15 @@
         </div>
       </div>
       <SongUnit :songData="toShowSongUnit"></SongUnit>
+      <div style="display: flex;justify-content: center;">
+        <el-pagination
+            layout="prev, pager, next"
+            @current-change="changePage"
+            :current-page="currentPage"
+            style="margin-bottom: 20px;"
+            :page-count="Math.ceil(totalSongCount/20)">
+        </el-pagination>
+      </div>
     </div>
   </div>
 </template>
@@ -28,6 +37,9 @@ import Loading from "@/components/Loading"
 export default {
   name: "SongListMusic",
   components: {Loading, SongUnit},
+  updated() {
+    console.log('kskskkksk!K!KKMKSM')
+  },
   data() {
     return {
       songListData: [],
@@ -35,6 +47,18 @@ export default {
       toShowSongUnit: [],
       isLoading: true,
       currentPage: 0,
+      totalSongCount: 0,
+    }
+  },
+  watch: {
+    $route: {
+      async handler(newVal, oldVal) {
+        this.isLoading=true;
+        await this.getMusicList();
+        await this.getSongListSong();
+        this.isLoading = false;
+      },
+      immediate:true,
     }
   },
   methods: {
@@ -43,14 +67,16 @@ export default {
       let result = await getSongListMusic({id});    //获取歌单详情
       this.songListData = result.playlist;                 //这个是歌单详情页数据
       this.songListEverySong = result.playlist.trackIds;   //这个是歌单里面的歌曲id数据
-      await this.getSongListSong();
+      this.totalSongCount = result.playlist.trackIds.length;
+      console.log(result);
+      this.getSongListSong();
     },
     async getSongListSong() {     //获取歌单里面的每一首歌
       let start = this.currentPage * 20;    //获取歌页里开始的第一首歌
       let end = start + 20;                 //获取歌单页里的最后一首歌
-      let getSongListData = this.songListEverySong.splice(start, end);
-      let getSongStr = '';
+      let getSongListData = this.songListEverySong.slice(start, end);
       console.log(getSongListData);
+      let getSongStr = '';
       for (const songListDatum of getSongListData) {
         getSongStr += songListDatum.id + ',';
       }
@@ -58,12 +84,17 @@ export default {
       let result;
       result = await getSongDetails({ids: getSongStr});
       this.toShowSongUnit = result.songs;
+      console.log(this.toShowSongUnit);
       for (const item of this.toShowSongUnit) {
         item.album = item.al;
         item.artists = item.ar;
         item.duration = item.dt;
       }
       this.isLoading = false;
+    },
+    changePage(offset) {
+      this.currentPage = offset;
+      this.getSongListSong();
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -82,6 +113,7 @@ export default {
   overflow: scroll;
   position: relative;
 }
+
 .header {
   width: 1236px;
   margin: 10px auto;
@@ -137,6 +169,40 @@ export default {
     }
   }
 }
+
+::v-deep .el-tabs__nav-wrap::after {
+  background-color: transparent;
+}
+
+::v-deep .el-tabs__active-bar {
+  background-color: white;
+}
+
+::v-deep .el-tabs__item {
+  color: #959592;
+}
+
+::v-deep .el-tabs__item.is-active {
+  color: white;
+}
+
+::v-deep .el-tabs__item:hover {
+  color: white;
+}
+
+::v-deep .el-pager li,
+::v-deep .el-pagination .btn-next,
+::v-deep .el-pagination .btn-prev,
+::v-deep .el-pager li.btn-quicknext,
+::v-deep .el-pager li.btn-quickprev {
+  background: none;
+  color: white;
+}
+
+::v-deep .el-pagination.is-background .el-pager li:not(.disabled).active {
+  background-color: transparent;
+}
+
 
 ::-webkit-scrollbar {
   display: none; /* Chrome Safari */

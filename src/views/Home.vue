@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <Message class="message"></Message>
     <transition name="fade">
       <login v-if="showLogin"></login>
     </transition>
@@ -28,6 +29,7 @@ import HomeHeader from "@/components/Home/HomeHeader";
 import HomeAside from "@/components/Home/HomeAside";
 import Login from "@/components/Home/Login";
 import MusicPlayer from "@/components/MusicPlayer";
+import Message from "@/components/Message";
 
 export default {
   name: 'Home',
@@ -40,7 +42,8 @@ export default {
     MusicPlayer,
     Login,
     HomeAside,
-    HomeHeader
+    HomeHeader,
+    Message,
   },
   data() {
     return {
@@ -107,5 +110,11 @@ export default {
 .player {
   //width: 200px;
   //height: 40px;
+}
+.message {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  z-index: 9999;
 }
 </style>

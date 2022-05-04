@@ -1,6 +1,6 @@
 <template>
   <div class="loadingMain">
-    <img :src="'/imgs/xiaoyangmao.png'">
+    <img :src="'./imgs/xiaoyangmao.png'">
     <span>小羊猫正在努力加载中</span>
   </div>
 </template>

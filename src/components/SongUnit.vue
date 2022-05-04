@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import {getSongDetails, getSongLyric, getSongUrl} from "@/api/MusicApi";
+import {getSongDetails, getSongLyric, getSongUrl, checkMusicAbility} from "@/api/MusicApi";
 
 export default {
   name: "SongUnit",
@@ -57,29 +57,38 @@ export default {
   },
   methods: {
     async playSong(item) {
-      let res = await getSongUrl({id: item.id});
-      let lyric = await getSongLyric({id: item.id});
-      let songDetails = await getSongDetails({ids: item.id});
-      let audio = {
-        name: '',
-        url: '',
-        cover: '',
-        lrc: '',
-        artist: '',
+      let songIsOk;
+      try {
+        songIsOk = await checkMusicAbility({id: item.id});
+        console.log(songIsOk);
+      } catch (err) {
+        this.$eventBus.$emit('showMessage',{msg:'该歌曲暂无法使用，可能是没版权，未登录，或者需要网易Vip等原因'})
       }
-      console.log(songDetails);
-      console.log(lyric);
-      console.log(res);
-      audio.name = songDetails.songs[0].al.name;
-      if (songDetails && !songDetails.song) {
-        audio.artist = songDetails.songs[0].ar[0].name;
-      } else {
-        audio.artist = songDetails.song.artists[0].name;
+      if(songIsOk) {
+        let res = await getSongUrl({id: item.id});
+        let lyric = await getSongLyric({id: item.id});
+        let songDetails = await getSongDetails({ids: item.id});
+        let audio = {
+          name: '',
+          url: '',
+          cover: '',
+          lrc: '',
+          artist: '',
+        }
+        console.log(songDetails);
+        console.log(lyric);
+        console.log(res);
+        audio.name = songDetails.songs[0].name;
+        if (songDetails && !songDetails.song) {
+          audio.artist = songDetails.songs[0].ar[0].name;
+        } else {
+          audio.artist = songDetails.song.artists[0].name;
+        }
+        audio.url = res.data[0].url;
+        audio.lrc = lyric.lrc.lyric;
+        audio.cover = songDetails.songs[0].al.picUrl;
+        this.$store.commit('addSong', audio);
       }
-      audio.url = res.data[0].url;
-      audio.lrc = lyric.lrc.lyric;
-      audio.cover = songDetails.songs[0].al.picUrl;
-      this.$store.commit('addSong', audio);
     }
   },
   mounted() {

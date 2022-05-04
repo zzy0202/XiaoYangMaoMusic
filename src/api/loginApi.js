@@ -46,6 +46,14 @@ const getUserPlayList = (params) => {
 	})
 }
 
+const logout = (params) => {
+	return request({
+		url: '/logout',
+		method: "GET",
+		params,
+	})
+}
+
 export {
-	getVerifyCode, login, getLoginStatus, getUser, getUserPlayList,
+	getVerifyCode, login, getLoginStatus, getUser, getUserPlayList, logout
 }

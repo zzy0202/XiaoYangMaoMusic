@@ -1,6 +1,6 @@
 <template>
   <div class="loginMain">
-    <div class="header" >
+    <div class="header">
       <div class="title" style="font-size: 15px;">登录</div>
       <span @click="close" class="iconfont iconfont icon-close"></span>
     </div>
@@ -24,7 +24,8 @@
         </div>
       </transition>
     </div>
-    <div class="loginSuccess" style="display: flex;justify-content: center;align-items: center;flex-direction: column" v-if="loginSuccess">
+    <div class="loginSuccess" style="display: flex;justify-content: center;align-items: center;flex-direction: column"
+         v-if="loginSuccess">
       <img style="margin: 0 auto" :src="'./imgs/xiaoyangmao.png'">
       <div style="font-size: 16px;text-align:center;;color: white">登录成功!你好我是小羊猫~</div>
     </div>
@@ -45,8 +46,8 @@ export default {
       captcha: '',
       message: "发送验证码",
       wait: false,
-      cookie:null,
-      loginSuccess:false,
+      cookie: null,
+      loginSuccess: false,
     }
   },
   methods: {
@@ -68,12 +69,13 @@ export default {
     async loginPassword() {
       let res = await login({phone: this.phoneNumber, password: this.password});
       console.log(res);
-      this.$store.commit('setUserLogin',res);
-      if(res.code === 200) {
+      this.$store.commit('setUserLogin', res);
+      if (res.code === 200) {
         this.loginSuccess = true;
-        let timer = setTimeout(()=>{
-          this.$eventBus.$emit('login',false);
-        },3000)
+        let timer = setTimeout(() => {
+          this.$router.go(0);
+          this.$eventBus.$emit('login', false);
+        }, 3000)
       }
     },
     async loginVerify() {
@@ -84,7 +86,7 @@ export default {
       console.log(this.$store.state.user);
       let temp = encodeURIComponent(this.cookie);
       this.cookie = this.$store.state.user.cookie;
-      let res =await getUser();
+      let res = await getUser();
       console.log(res);
     },
     close() {
