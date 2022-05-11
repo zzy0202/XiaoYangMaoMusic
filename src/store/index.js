@@ -9,7 +9,7 @@ const store = new Vuex.Store({
 		audio: [{
 			name: "恶魔之子",
 			artist: "ヒグチアイ",
-			url: "./firstSong.flac",
+			url: "./firstSong.mp3",
 			cover: "https://i.ytimg.com/vi/swZQcMkiwCg/maxresdefault.jpg",
 			lrc: '[00:00.000] 作词 : ヒグチアイ\n' +
 				'[00:00.254] 作曲 : ヒグチアイ\n' +

@@ -10,11 +10,13 @@ request.interceptors.request.use((config) => {
 		config.params = {
 			...config.params,
 			cookie: encodeURIComponent(store.state.user.cookie),
+			realIP:'116.25.146.177',
 		}
 	} else {
 		config.params = {
 			...config.params,
 			cookie: '1',
+			realIP:'116.25.146.177'
 		}
 	}
 	return config;
